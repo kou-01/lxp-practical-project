@@ -18,9 +18,3 @@ $ docker exec -it drone-inventory-system /bin/bash
 $ ./gradlew build
 $ ./gradlew bootRun
 ```
-
-## デプロイ： App Runner with ECS
-```
-$ ./gradlew bootJar && cp build/libs/dev-0.0.1.jar ./
-$ java -jar ./dev-0.0.1.jar
-```

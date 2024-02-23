@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * ホームコントローラークラス
+ * 在庫一覧画面 コントローラークラス
  * 
  * @author kijima
  *
  */
 @Controller
 @RequestMapping("admin")
-public class HomeController extends AbstractController {
+public class StockListController extends AbstractController {
 
 	/**
 	 * 初期表示
