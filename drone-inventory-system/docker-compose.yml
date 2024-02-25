@@ -12,7 +12,7 @@ services:
 
   db:
     build: ./db/mysql
-    container_name: stock_mng
+    container_name: stock-mng
     volumes:
       - db-store:/var/lib/mysql
     ports:
