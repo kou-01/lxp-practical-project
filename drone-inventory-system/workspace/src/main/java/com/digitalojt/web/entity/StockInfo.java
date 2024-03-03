@@ -20,7 +20,7 @@ public class StockInfo {
 	 * 在庫ID
 	 */
 	@Id
-	public String stockId;
+	public int stockId;
 
 	/**
 	 * 在庫名
@@ -40,7 +40,7 @@ public class StockInfo {
 	/**
 	 * 在庫個数
 	 */
-	public String amount;
+	public int amount;
 
 	/**
 	 * 在庫保管ID
