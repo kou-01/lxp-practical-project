@@ -8,13 +8,12 @@ Docker 起動
 
 ```
 $ docker-compose up -d
-$ docker exec -it drone-inventory-system /bin/bash
+$ docker exec -it drone-inventory-system //bin/bash
 ```
 
 アプリを起動
-
-
 ```
-$ ./gradlew build
-$ ./gradlew bootRun
+# sed -i 's/\r//' ./gradlew
+# ./gradlew build
+# ./gradlew bootRun
 ```
