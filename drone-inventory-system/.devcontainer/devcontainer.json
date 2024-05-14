@@ -1,0 +1,24 @@
+{
+    "name": "remote-dis",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "shutdownAction": "stopCompose",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vscjava.vscode-spring-initializer",
+                "vscjava.vscode-gradle",
+                "vscjava.vscode-java-debug",
+                "MS-CEINTL.vscode-language-pack-ja",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "VisualStudioExptTeam.intellicode-api-usage-examples",
+                "redhat.java",
+                "vscjava.vscode-maven",
+                "vscjava.vscode-java-dependency",
+                "vscjava.vscode-java-test"
+            ]
+        }
+    }
+}
