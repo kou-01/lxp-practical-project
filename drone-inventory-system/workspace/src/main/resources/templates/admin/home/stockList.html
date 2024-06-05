@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}">
+
+<head>
+  <title>在庫一覧画面</title>
+</head>
+
+<body>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">在庫一覧</h6>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>分類</th>
+              <th>名称</th>
+              <th>個数</th>
+              <th>説明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="stock : ${stockPage.content}">
+              <td th:text="${stock.classification}">分類</td>
+              <td th:text="${stock.name}">名称</td>
+              <td th:text="${stock.amount}">個数</td>
+              <td th:text="${stock.description}">説明</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item" th:classappend="${stockPage.hasPrevious()} ? '' : 'disabled'">
+              <a class="page-link" th:href="@{/admin/stocks(page=${stockPage.number - 1}, size=${stockPage.size})}"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" th:each="page : ${#numbers.sequence(0, stockPage.totalPages - 1)}"
+              th:classappend="${page == stockPage.number} ? 'active'">
+              <a class="page-link" th:href="@{/admin/stocks(page=${page}, size=${stockPage.size})}"
+                th:text="${page + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${stockPage.hasNext()} ? '' : 'disabled'">
+              <a class="page-link" th:href="@{/admin/stocks(page=${stockPage.number + 1}, size=${stockPage.size})}"
+                aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
