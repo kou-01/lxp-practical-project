@@ -13,6 +13,15 @@
 
     <div class="card-body">
       <div class="table-responsive">
+        <div class="form-group">
+          <label for="pageSize">1ページあたりの表示件数:</label>
+          <select id="pageSize" class="form-control" onchange="changePageSize()">
+            <option th:value="5" th:text="5" th:selected="${size == 5}">5</option>
+            <option th:value="10" th:text="10" th:selected="${size == 10}">10</option>
+            <option th:value="20" th:text="20" th:selected="${size == 20}">20</option>
+            <option th:value="50" th:text="50" th:selected="${size == 50}">50</option>
+          </select>
+        </div>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
@@ -57,6 +66,16 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function changePageSize() {
+      const pageSize = document.getElementById('pageSize').value;
+      const url = new URL(window.location.href);
+      url.searchParams.set('size', pageSize);
+      url.searchParams.set('page', '0');
+      window.location.href = url.toString();
+    }
+  </script>
 </body>
 
 </html>

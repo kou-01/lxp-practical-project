@@ -46,6 +46,7 @@ public class StockListController extends AbstractController {
 			@RequestParam(value = "size", defaultValue = "10") int size) {
 		Page<StockInfo> stockPage = stockListService.getStocks(page, size);
 		model.addAttribute("stockPage", stockPage);
+		model.addAttribute("size", size);
 		return "admin/home/stockList";
 	}
 }
