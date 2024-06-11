@@ -3,6 +3,11 @@
 
 <head>
   <title>在庫一覧画面</title>
+  <!-- <style>
+    .select-custom {
+      width: 100px;
+    }
+  </style> -->
 </head>
 
 <body>
@@ -15,7 +20,7 @@
       <div class="table-responsive">
         <div class="form-group">
           <label for="pageSize">1ページあたりの表示件数:</label>
-          <select id="pageSize" class="form-control" onchange="changePageSize()">
+          <select id="pageSize" class="form-control-sm" onchange="changePageSize()">
             <option th:value="5" th:text="5" th:selected="${size == 5}">5</option>
             <option th:value="10" th:text="10" th:selected="${size == 10}">10</option>
             <option th:value="20" th:text="20" th:selected="${size == 20}">20</option>
