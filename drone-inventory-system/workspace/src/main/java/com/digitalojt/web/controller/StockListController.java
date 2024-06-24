@@ -43,8 +43,11 @@ public class StockListController extends AbstractController {
 	@GetMapping("/stocks")
 	public String listStocks(Model model,
 			@RequestParam(value = "page", defaultValue = "0") int page,
-			@RequestParam(value = "size", defaultValue = "10") int size) {
-		Page<StockInfo> stockPage = stockListService.getStocks(page, size);
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(value = "classification", required = false) String classification,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "amount", required = false) Integer amount) {
+		Page<StockInfo> stockPage = stockListService.searchStocks(page, size, classification, name, amount);
 		model.addAttribute("stockPage", stockPage);
 		model.addAttribute("size", size);
 		return "admin/home/stockList";

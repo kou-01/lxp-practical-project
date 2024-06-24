@@ -3,11 +3,6 @@
 
 <head>
   <title>在庫一覧画面</title>
-  <!-- <style>
-    .select-custom {
-      width: 100px;
-    }
-  </style> -->
 </head>
 
 <body>
@@ -18,6 +13,32 @@
 
     <div class="card-body">
       <div class="table-responsive">
+        <!-- 検索フィールドの追加 -->
+        <div class="form-group">
+          <form id="searchForm" action="#" th:action="@{/admin/stocks}" method="get">
+            <div class="row mb-3">
+              <div class="col">
+                <label for="classification">分類:</label>
+                <input type="text" id="classification" name="classification" class="form-control"
+                  th:value="${param.classification}">
+              </div>
+              <div class="col">
+                <label for="name">名称:</label>
+                <input type="text" id="name" name="name" class="form-control" th:value="${param.name}">
+              </div>
+              <div class="col">
+                <label for="amount">個数:</label>
+                <input type="number" id="amount" name="amount" class="form-control" th:value="${param.amount}">
+                <div class="input-group-append">
+                  <span class="input-group-text">以下</span>
+                </div>
+              </div>
+              <div class="col d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">検索</button>
+              </div>
+            </div>
+          </form>
+        </div>
         <div class="form-group">
           <label for="pageSize">1ページあたりの表示件数:</label>
           <select id="pageSize" class="form-control-sm" onchange="changePageSize()">

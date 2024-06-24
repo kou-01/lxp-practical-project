@@ -42,4 +42,8 @@ public class StockListService {
 	public Page<StockInfo> getStocks(int page, int size) {
 		return repository.findAll(PageRequest.of(page, size));
 	}
+
+	public Page<StockInfo> searchStocks(int page, int size, String classification, String name, Integer amount) {
+		return repository.findByCriteria(classification, name, amount, PageRequest.of(page, size));
+	}
 }
