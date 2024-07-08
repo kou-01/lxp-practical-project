@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.digitalojt.web.entity.StockInfo;
+import com.digitalojt.web.form.StockListForm;
 import com.digitalojt.web.repository.StockInfoRepository;
 // import com.digitalojt.web.service.dto.StockListDto;
 
@@ -43,7 +44,8 @@ public class StockListService {
 		return repository.findAll(PageRequest.of(page, size));
 	}
 
-	public Page<StockInfo> searchStocks(int page, int size, String classification, String name, Integer amount) {
-		return repository.findByCriteria(classification, name, amount, PageRequest.of(page, size));
+	public Page<StockInfo> searchStocks(int page, int size, StockListForm form) {
+		return repository.findByCriteria(form.getClassification(), form.getName(), form.getAmount(),
+				PageRequest.of(page, size));
 	}
 }

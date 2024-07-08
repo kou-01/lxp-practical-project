@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.digitalojt.web.entity.StockInfo;
+import com.digitalojt.web.form.StockListForm;
 import com.digitalojt.web.service.StockListService;
 
 /**
@@ -44,10 +48,14 @@ public class StockListController extends AbstractController {
 	public String listStocks(Model model,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size,
-			@RequestParam(value = "classification", required = false) String classification,
-			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "amount", required = false) Integer amount) {
-		Page<StockInfo> stockPage = stockListService.searchStocks(page, size, classification, name, amount);
+			@ModelAttribute StockListForm form,
+			@RequestParam(value = "search", required = false) Boolean search,
+			BindingResult result,
+			RedirectAttributes redirectAttributes) {
+		if (Boolean.TRUE.equals(search) && form.isEmpty()) {
+			model.addAttribute("error", "少なくとも1つの検索項目を入力してください。");
+		}
+		Page<StockInfo> stockPage = stockListService.searchStocks(page, size, form);
 		model.addAttribute("stockPage", stockPage);
 		model.addAttribute("size", size);
 		return "admin/home/stockList";
