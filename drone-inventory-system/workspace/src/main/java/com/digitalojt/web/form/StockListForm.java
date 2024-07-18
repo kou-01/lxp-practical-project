@@ -16,9 +16,11 @@ public class StockListForm {
   private String name;
   private Integer amount;
 
-  public boolean isEmpty() {
-    return (classification == null || classification.isEmpty()) &&
-        (name == null || name.isEmpty()) &&
-        (amount == null);
+  public boolean checkValue() {
+    if (classification.isEmpty() && name.isEmpty() && amount == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

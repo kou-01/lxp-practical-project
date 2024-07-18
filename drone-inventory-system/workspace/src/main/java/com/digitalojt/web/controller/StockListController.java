@@ -52,7 +52,7 @@ public class StockListController extends AbstractController {
 			@RequestParam(value = "search", required = false) Boolean search,
 			BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		if (Boolean.TRUE.equals(search) && form.isEmpty()) {
+		if (Boolean.TRUE.equals(search) && !form.checkValue()) {
 			model.addAttribute("error", "少なくとも1つの検索項目を入力してください。");
 		}
 		Page<StockInfo> stockPage = stockListService.searchStocks(page, size, form);
