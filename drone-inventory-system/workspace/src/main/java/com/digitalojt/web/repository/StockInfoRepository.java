@@ -21,8 +21,8 @@ public interface StockInfoRepository extends JpaRepository<StockInfo, String> {
         Page<StockInfo> findAll(Pageable pageable);
 
         @Query("SELECT s FROM StockInfo s WHERE " +
-                        "(:classification IS NULL OR s.classification = :classification) AND " +
-                        "(:name IS NULL OR s.name LIKE %:name%) AND " +
+                        "(:classification = '' OR s.classification = :classification) AND " +
+                        "(:name = '' OR s.name LIKE %:name%) AND " +
                         "(:amount IS NULL OR s.amount <= :amount)")
         Page<StockInfo> findByCriteria(@Param("classification") String classification,
                         @Param("name") String name,

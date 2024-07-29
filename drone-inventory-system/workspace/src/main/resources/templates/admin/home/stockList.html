@@ -72,32 +72,35 @@
         </table>
       </div>
       <div th:unless="${error}">
-        <nav aria-label="Page navigation">
-          <ul class="pagination">
-            <li class="page-item" th:classappend="${stockPage.hasPrevious()} ? '' : 'disabled'">
-              <a class="page-link" th:href="@{/admin/stocks(page=${stockPage.number - 1}, size=${stockPage.size})}"
+        <div th:if="${stockPage.totalPages > 1}">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item" th:classappend="${stockPage.hasPrevious()} ? '' : 'disabled'">
+              <a class="page-link" th:href="@{/admin/stocks(search=true, page=${stockPage.number - 1}, size=${stockPage.size}, classification=${param.classification}, name=${param.name}, amount=${param.amount})}"
                 aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item" th:each="page : ${#numbers.sequence(0, stockPage.totalPages - 1)}"
-              th:classappend="${page == stockPage.number} ? 'active'">
-              <a class="page-link" th:href="@{/admin/stocks(page=${page}, size=${stockPage.size})}"
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item" th:each="page : ${#numbers.sequence(0, stockPage.totalPages - 1)}"
+                th:classappend="${page == stockPage.number} ? 'active'">
+              <a class="page-link" th:href="@{/admin/stocks(search=true, page=${page}, size=${stockPage.size} , classification=${param.classification}, name=${param.name}, amount=${param.amount})}"
                 th:text="${page + 1}">1</a>
-            </li>
-            <li class="page-item" th:classappend="${stockPage.hasNext()} ? '' : 'disabled'">
-              <a class="page-link" th:href="@{/admin/stocks(page=${stockPage.number + 1}, size=${stockPage.size})}"
+              </li>
+              <li class="page-item" th:classappend="${stockPage.hasNext()} ? '' : 'disabled'">
+              <a class="page-link" th:href="@{/admin/stocks(search=true, page=${stockPage.number + 1}, size=${stockPage.size}, classification=${param.classification}, name=${param.name}, amount=${param.amount})}"
                 aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    // 1ページ当たりの表示件数を変更した場合の処理
     function changePageSize() {
       const pageSize = document.getElementById('pageSize').value;
       const url = new URL(window.location.href);
