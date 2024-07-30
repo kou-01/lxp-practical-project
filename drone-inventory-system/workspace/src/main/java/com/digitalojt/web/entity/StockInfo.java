@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 在庫情報Entity
@@ -14,51 +16,53 @@ import lombok.Data;
  */
 @Data
 @Entity
+@Getter
+@Setter
 public class StockInfo {
 
-    /**
+	/**
 	 * 在庫ID
 	 */
 	@Id
-	public int stockId;
+	private int stockId;
 
 	/**
 	 * 在庫名
 	 */
-	public String name;
+	private String name;
 
 	/**
 	 * 在庫分類
 	 */
-	public String classification;
+	private String classification;
 
 	/**
 	 * 在庫説明
 	 */
-	public String description;
+	private String description;
 
 	/**
 	 * 在庫個数
 	 */
-	public int amount;
+	private int amount;
 
 	/**
 	 * 在庫保管ID
 	 */
-	public String placeId;
+	private String placeId;
 
 	/**
 	 * 論理削除フラグ
 	 */
-	public String deleteFlag;
+	private String deleteFlag;
 
 	/**
 	 * 更新日
 	 */
-	public Timestamp updateDate;
+	private Timestamp updateDate;
 
 	/**
 	 * 登録日
 	 */
-	public Timestamp createDate;
+	private Timestamp createDate;
 }
