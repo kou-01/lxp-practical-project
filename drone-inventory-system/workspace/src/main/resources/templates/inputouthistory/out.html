@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}">
+
+<head>
+  <title>在庫出庫申請一覧</title>
+</head>
+
+<body>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">在庫出庫申請一覧</h6>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <a href="/history/register" class="btn btn-primary">在庫出庫申請</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>出庫数量</th>
+              <th>出庫日付</th>
+              <th>ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="outHistory : ${outHistories}">
+              <td th:text="${outHistory.stockName}">名称</td>
+              <td th:text="${outHistory.amount}">出庫数量</td>
+              <td th:text="${outHistory.date}">出庫日付</td>
+              <td>
+                <span th:if="${outHistory.status == '0'}">未承認</span>
+                <span th:if="${outHistory.status == '1'}">承認済</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

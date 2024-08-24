@@ -24,6 +24,10 @@ public class StockListService {
 	@Autowired
 	private StockInfoRepository repository;
 
+	public StockInfo getStockById(String stockId) {
+		return repository.findById(stockId).orElse(null);
+	}
+
 	/**
 	 * 在庫一覧画面に表示するデータを一括取得
 	 * 

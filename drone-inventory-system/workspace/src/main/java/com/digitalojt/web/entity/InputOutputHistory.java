@@ -13,18 +13,17 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InputOutputHistory {
-    
+
     /**
      * 履歴ID
      */
     @Id
     private int historyId;
-    
+
     /**
      * 在庫ID
      */
     private int stockId;
-
     /**
      * 入出庫インデックス
      */
@@ -59,5 +58,5 @@ public class InputOutputHistory {
      * 更新日付
      */
     private Timestamp updateDate;
-    
+
 }
