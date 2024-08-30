@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}">
+
+<head>
+  <title>在庫出庫申請</title>
+</head>
+
+<body>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">在庫出庫申請</h6>
+    </div>
+    <div class="card-body" style="width: 400px; margin: 0 auto;">
+      <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+      <form action="/history/setRequest" method="post">
+        <div class="form-group">
+          <label for="name">名称</label>
+          <select id="name" name="stockId" class="form-control" required>
+            <option value="" th:selected="${selectedStockId == null}" disabled>在庫名を選択してください</option>
+            <option th:each="stock : ${stockInfoList}" th:value="${stock.stockId}" th:text="${stock.name}"
+              th:selected="${stock.stockId == selectedStockId}">在庫名</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">出庫日付</label>
+          <input type="date" id="date" name="date" class="form-control" th:value="${enteredDate}" required>
+        </div>
+        <div class="form-group">
+          <label for="amount">出庫数量</label>
+          <input type="number" id="amount" name="amount" th:value="${enteredAmount}" class="form-control"
+            placeholder="出庫数量を入力してください" required>
+        </div>
+        <button type="submit" class="btn btn-primary">登録</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 各フィールドのカスタムメッセージを設定
+      const fields = [
+        { id: 'name', message: '名称を入力してください。' },
+        { id: 'date', message: '出庫日付を入力してください。' },
+        { id: 'amount', message: '出庫数量を入力してください。' }
+      ];
+
+      fields.forEach(field => {
+        const inputElement = document.getElementById(field.id);
+        inputElement.oninvalid = function (e) {
+          e.target.setCustomValidity(field.message);
+        };
+        inputElement.oninput = function (e) {
+          e.target.setCustomValidity('');
+        };
+      });
+    });
+  </script>
+</body>
+
+</html>
