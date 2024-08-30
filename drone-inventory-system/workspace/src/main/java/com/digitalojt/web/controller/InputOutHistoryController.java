@@ -19,6 +19,9 @@ import com.digitalojt.web.service.InputOutputHistoryService;
 import com.digitalojt.web.service.StockListService;
 import com.digitalojt.web.service.dto.InputOutputHistoryDto;
 
+/**
+ * 出庫申請管理 コントローラクラス
+ */
 @Controller
 @RequestMapping("history")
 public class InputOutHistoryController extends AbstractController {
@@ -29,9 +32,9 @@ public class InputOutHistoryController extends AbstractController {
 	private InputOutputHistoryService inputOutputHistoryService;
 
 	/**
-	 * 出庫管理
+	 * 出庫申請一覧画面表示
 	 */
-	@GetMapping("/out")
+	@GetMapping("/getRequestList")
 	public String getOutHistories(Model model) {
 		List<InputOutputHistoryDto> dtoList = inputOutputHistoryService.findAll();
 		model.addAttribute("outHistories", dtoList);
@@ -42,9 +45,9 @@ public class InputOutHistoryController extends AbstractController {
 	private StockListService stockListService;
 
 	/**
-	 * 申請登録画面表示
+	 * 出庫申請登録画面表示
 	 */
-	@GetMapping("/register")
+	@GetMapping("/getRequest")
 	public String getInputOutRegister(Model model) {
 		List<StockInfo> stockInfoList = stockListService.getStockListData();
 		model.addAttribute("stockInfoList", stockInfoList);
@@ -52,9 +55,9 @@ public class InputOutHistoryController extends AbstractController {
 	}
 
 	/**
-	 * 申請登録
+	 * 出庫申請登録機能
 	 */
-	@PostMapping("/register")
+	@PostMapping("/setRequest")
 	public String setInputOutRegister(Model model,
 			@RequestParam("stockId") int stockId,
 			@RequestParam("date") String date,
@@ -62,7 +65,7 @@ public class InputOutHistoryController extends AbstractController {
 
 		// 1以上であるかチェック
 		if (amount < 1) {
-			model.addAttribute("error", "数量は1以上の整数で入力してください。");
+			model.addAttribute("error", "出庫数量は1以上の整数で入力してください。");
 			List<StockInfo> stockInfoList = stockListService.getStockListData();
 			model.addAttribute("stockInfoList", stockInfoList);
 			// stockIdが存在するかチェック
@@ -71,14 +74,28 @@ public class InputOutHistoryController extends AbstractController {
 			model.addAttribute("enteredDate", date);
 			return "inputouthistory/register";
 		}
+
+		// SimpleDateFormatの厳密なチェックを有効化
+		DATE_FORMAT.setLenient(false);
+
 		InputOutputHistory newEntry = new InputOutputHistory();
 
 		newEntry.setStockId(stockId);
 		newEntry.setAmount(amount);
 		try {
+			// 年、月、日をチェックする
+			String[] dateParts = date.split("-");
+			int year = Integer.parseInt(dateParts[0]);
+			int month = Integer.parseInt(dateParts[1]);
+			int day = Integer.parseInt(dateParts[2]);
+
+			if (year < 1900 || year > 9999 || month < 1 || month > 12 || day < 1 || day > 31) {
+				throw new IllegalArgumentException("日付が不正です。");
+			}
+
 			Timestamp timestamp = new Timestamp(DATE_FORMAT.parse(date).getTime());
 			newEntry.setDate(timestamp);
-		} catch (ParseException e) {
+		} catch (ParseException | IllegalArgumentException e) {
 			model.addAttribute("error", "日付の形式が正しくありません。");
 			List<StockInfo> stockInfoList = stockListService.getStockListData();
 			model.addAttribute("stockInfoList", stockInfoList);
@@ -99,6 +116,6 @@ public class InputOutHistoryController extends AbstractController {
 		// エンティティをデータベースに保存
 		inputOutputHistoryService.save(newEntry);
 
-		return "redirect:/history/out";
+		return "redirect:/history/getRequestList";
 	}
 }

@@ -23,7 +23,7 @@ public class InputOutputHistoryService {
     public List<InputOutputHistoryDto> findAll() {
         List<InputOutputHistory> histories = repository.findAll();
         return histories.stream().map(this::convertToDTO)
-                .sorted(Comparator.comparingInt(InputOutputHistoryDto::getHistoryId)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(InputOutputHistoryDto::getDate).reversed()).collect(Collectors.toList());
     }
 
     @Autowired

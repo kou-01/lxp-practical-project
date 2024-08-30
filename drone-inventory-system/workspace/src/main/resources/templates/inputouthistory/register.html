@@ -12,7 +12,7 @@
     </div>
     <div class="card-body" style="width: 400px; margin: 0 auto;">
       <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-      <form action="/history/register" method="post">
+      <form action="/history/setRequest" method="post">
         <div class="form-group">
           <label for="name">名称</label>
           <select id="name" name="stockId" class="form-control" required>
@@ -34,6 +34,26 @@
       </form>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 各フィールドのカスタムメッセージを設定
+      const fields = [
+        { id: 'name', message: '名称を入力してください。' },
+        { id: 'date', message: '出庫日付を入力してください。' },
+        { id: 'amount', message: '出庫数量を入力してください。' }
+      ];
+
+      fields.forEach(field => {
+        const inputElement = document.getElementById(field.id);
+        inputElement.oninvalid = function (e) {
+          e.target.setCustomValidity(field.message);
+        };
+        inputElement.oninput = function (e) {
+          e.target.setCustomValidity('');
+        };
+      });
+    });
+  </script>
 </body>
 
 </html>
